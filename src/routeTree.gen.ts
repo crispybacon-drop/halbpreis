@@ -10,33 +10,74 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AngeboteRouteImport } from './routes/angebote'
+import { Route as EinstellungenRouteImport } from './routes/einstellungen'
+import { Route as MerklisteRouteImport } from './routes/merkliste'
+import { Route as SucheRouteImport } from './routes/suche'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AngeboteRoute = AngeboteRouteImport.update({
+  id: '/angebote',
+  path: '/angebote',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EinstellungenRoute = EinstellungenRouteImport.update({
+  id: '/einstellungen',
+  path: '/einstellungen',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MerklisteRoute = MerklisteRouteImport.update({
+  id: '/merkliste',
+  path: '/merkliste',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SucheRoute = SucheRouteImport.update({
+  id: '/suche',
+  path: '/suche',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/angebote': typeof AngeboteRoute
+  '/einstellungen': typeof EinstellungenRoute
+  '/merkliste': typeof MerklisteRoute
+  '/suche': typeof SucheRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/angebote': typeof AngeboteRoute
+  '/einstellungen': typeof EinstellungenRoute
+  '/merkliste': typeof MerklisteRoute
+  '/suche': typeof SucheRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/angebote': typeof AngeboteRoute
+  '/einstellungen': typeof EinstellungenRoute
+  '/merkliste': typeof MerklisteRoute
+  '/suche': typeof SucheRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/angebote' | '/einstellungen' | '/merkliste' | '/suche'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/angebote' | '/einstellungen' | '/merkliste' | '/suche'
+  id:
+    '__root__' | '/' | '/angebote' | '/einstellungen' | '/merkliste' | '/suche'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AngeboteRoute: typeof AngeboteRoute
+  EinstellungenRoute: typeof EinstellungenRoute
+  MerklisteRoute: typeof MerklisteRoute
+  SucheRoute: typeof SucheRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +89,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/angebote': {
+      id: '/angebote'
+      path: '/angebote'
+      fullPath: '/angebote'
+      preLoaderRoute: typeof AngeboteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/einstellungen': {
+      id: '/einstellungen'
+      path: '/einstellungen'
+      fullPath: '/einstellungen'
+      preLoaderRoute: typeof EinstellungenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/merkliste': {
+      id: '/merkliste'
+      path: '/merkliste'
+      fullPath: '/merkliste'
+      preLoaderRoute: typeof MerklisteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/suche': {
+      id: '/suche'
+      path: '/suche'
+      fullPath: '/suche'
+      preLoaderRoute: typeof SucheRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AngeboteRoute: AngeboteRoute,
+  EinstellungenRoute: EinstellungenRoute,
+  MerklisteRoute: MerklisteRoute,
+  SucheRoute: SucheRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

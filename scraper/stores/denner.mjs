@@ -6,7 +6,8 @@ const PER_PAGE = 100;
 
 function flat(item) {
   const o = {};
-  for (const a of item.attributeInfo || []) o[a.attributeName] = (a.vals || []).map((v) => v.value).join("|");
+  for (const a of item.attributeInfo || [])
+    o[a.attributeName] = (a.vals || []).map((v) => v.value).join("|");
   return o;
 }
 
@@ -60,7 +61,12 @@ export async function scrape() {
   do {
     const r = await getJson(`${BASE}/nuxt-api/promotions`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json", Origin: BASE, Referer: `${BASE}/de/aktionen/aktuelle-aktionen` },
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        Origin: BASE,
+        Referer: `${BASE}/de/aktionen/aktuelle-aktionen`,
+      },
       body: JSON.stringify({
         lang: "de",
         promoFlag: "promo_current_week",

@@ -2,7 +2,7 @@
 // Usage: node scraper/run.mjs [outDir] [store,store,…]
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { today, addDays, GROUPS } from "./lib.mjs";
+import { today, addDays, clip, GROUPS } from "./lib.mjs";
 import * as migros from "./stores/migros.mjs";
 import * as coop from "./stores/coop.mjs";
 import * as denner from "./stores/denner.mjs";
@@ -48,7 +48,13 @@ for (const name of Object.keys(STORES)) {
     // Keep yesterday's still-valid offers so one broken store never blanks the app.
     const kept = (prevDeals.deals || []).filter((d) => d.store === name && (!d.to || d.to >= day));
     deals.push(...kept);
-    status[name] = { ok: false, count: kept.length, stale: kept.length > 0, error: String(err?.message || err).slice(0, 300), ms: Date.now() - t0 };
+    status[name] = {
+      ok: false,
+      count: kept.length,
+      stale: kept.length > 0,
+      error: String(err?.message || err).slice(0, 300),
+      ms: Date.now() - t0,
+    };
     log(`✘ ${name}: ${err?.stack || err}`);
     log(`  kept ${kept.length} offers from the previous run`);
   }
@@ -56,7 +62,10 @@ for (const name of Object.keys(STORES)) {
 
 // Drop offers that already ended and normalise groups.
 deals = deals.filter((d) => !d.to || d.to >= day);
-for (const d of deals) if (!GROUPS.includes(d.group)) d.group = "sonstiges";
+for (const d of deals) {
+  if (!GROUPS.includes(d.group)) d.group = "sonstiges";
+  d.info = clip(d.info, 140) || null;
+}
 
 // Price history: fills the discount % for offers whose store does not publish
 // an old price (mainly Lidl and Aldi). Only a real drop versus the last

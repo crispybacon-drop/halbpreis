@@ -1,7 +1,17 @@
 // Aldi Suisse: the product-search API behind aldi-suisse.ch.
 // Uses the dated special-buy lists (Monday/Thursday) plus the "Aktionen" range.
 // Only some items carry an old price; the rest get a % from price history later.
-import { getJson, num, pct, round2, classify, today, addDays, weekday, sleep } from "../lib.mjs";
+import {
+  getJson,
+  num,
+  pct,
+  round2,
+  classifyDeep,
+  today,
+  addDays,
+  weekday,
+  sleep,
+} from "../lib.mjs";
 
 const API = "https://asl.api.aldi-suisse.ch/commerce/v3/product-search";
 const STORE = "E172";
@@ -22,7 +32,11 @@ async function all(params, max = 1200) {
       ...params,
     });
     const r = await getJson(`${API}?${q}`, {
-      headers: { Accept: "application/json", Origin: "https://www.aldi-suisse.ch", Referer: "https://www.aldi-suisse.ch/" },
+      headers: {
+        Accept: "application/json",
+        Origin: "https://www.aldi-suisse.ch",
+        Referer: "https://www.aldi-suisse.ch/",
+      },
     });
     const data = r.data || [];
     out.push(...data);
@@ -54,7 +68,7 @@ function toDeal(p, from, special) {
     .map((i) => i.displayText)
     .filter(Boolean);
   if (special) tags.unshift("Aktion");
-  const cats = (p.categories || []).map((c) => c.name);
+  const cats = (p.categories || []).map((c) => c.name).filter((n) => !/^aktionen$/i.test(n));
   const asset = p.assets?.[0]?.url;
   return {
     id: `aldi:${p.sku}`,
@@ -66,10 +80,14 @@ function toDeal(p, from, special) {
     pct: pct(price, old),
     pctSrc: pct(price, old) ? "store" : null,
     tag: [...new Set(tags)].join(" · ") || null,
-    img: asset ? asset.replace("{width}", "400").replace("{slug}", encodeURIComponent(p.urlSlugText || "produkt")) : null,
+    img: asset
+      ? asset
+          .replace("{width}", "400")
+          .replace("{slug}", encodeURIComponent(p.urlSlugText || "produkt"))
+      : null,
     url: `https://www.aldi-suisse.ch/de/produkt/${p.urlSlugText}-${p.sku}`,
     cat: cats.join(" › "),
-    group: classify(cats[0], cats.slice(1).join(" "), p.name),
+    group: classifyDeep(cats, p.name),
     from: p.onSaleDate || from || null,
     to: null,
   };
@@ -77,7 +95,16 @@ function toDeal(p, from, special) {
 
 export async function scrape() {
   const deals = new Map();
-  const add = (d) => d && !deals.has(d.id) && deals.set(d.id, d);
+  const add = (d) => {
+    if (!d) return;
+    const prev = deals.get(d.id);
+    if (!prev) return deals.set(d.id, d);
+    // keep the first entry, but take a better category from a later list
+    if ((prev.group === "sonstiges" || !prev.cat) && d.cat) {
+      prev.cat = d.cat;
+      prev.group = d.group;
+    }
+  };
 
   for (const day of promoDays()) {
     for (const p of await all({ promotionKey: day }, 600)) add(toDeal(p, day, true));

@@ -10,9 +10,12 @@ function img(url) {
 }
 
 async function guestToken() {
-  const res = await http(`${BASE}/authentication/public/v1/api/guest?authorizationNotRequired=true`, {
-    headers: { Accept: "application/json" },
-  });
+  const res = await http(
+    `${BASE}/authentication/public/v1/api/guest?authorizationNotRequired=true`,
+    {
+      headers: { Accept: "application/json" },
+    },
+  );
   const token = res.headers.get("leshopch");
   if (!res.ok || !token) throw new Error(`Migros guest login failed (HTTP ${res.status})`);
   return token;
@@ -66,7 +69,9 @@ export async function scrape() {
 
   const all = [...(search.items || []), ...(search.weekendPromotions?.items || [])];
   const productIds = [...new Set(all.filter((i) => i.type === "PRODUCT").map((i) => i.id))];
-  const groupIds = [...new Set(all.filter((i) => i.type === "GROUP_PROMOTION").map((i) => String(i.id)))];
+  const groupIds = [
+    ...new Set(all.filter((i) => i.type === "GROUP_PROMOTION").map((i) => String(i.id))),
+  ];
   const weekendIds = new Set((search.weekendPromotions?.items || []).map((i) => String(i.id)));
 
   const deals = [];

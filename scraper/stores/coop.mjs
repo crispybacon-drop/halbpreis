@@ -1,6 +1,18 @@
 // Coop: "Alle Aktionen" listing on coop.ch. Product tiles are embedded as
 // HTML-escaped JSON in the server-rendered page.
-import { http, num, pct, round2, decodeEntities, extractObjects, classify, today, addDays, weekday, sleep } from "../lib.mjs";
+import {
+  http,
+  num,
+  pct,
+  round2,
+  decodeEntities,
+  extractObjects,
+  classify,
+  today,
+  addDays,
+  weekday,
+  sleep,
+} from "../lib.mjs";
 
 const BASE = "https://www.coop.ch";
 const LIST = `${BASE}/de/aktionen/alle-aktionen/c/m_1111`;
@@ -25,7 +37,11 @@ function abs(u) {
 
 async function page(n) {
   const url = `${LIST}?page=${n}&pageSize=${PAGE_SIZE}&q=%3Arelevance&sort=relevance`;
-  const res = await http(url, { headers: { Accept: "text/html,application/xhtml+xml" } }, { timeout: 60000 });
+  const res = await http(
+    url,
+    { headers: { Accept: "text/html,application/xhtml+xml" } },
+    { timeout: 60000 },
+  );
   if (!res.ok) throw new Error(`Coop HTTP ${res.status} (page ${n})`);
   const html = await res.text();
   const total = Number((html.match(/([\d’']+)\s*Produkte/) || [])[1]?.replace(/[’']/g, "")) || null;
