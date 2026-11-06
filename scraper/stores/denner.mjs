@@ -47,7 +47,11 @@ function toDeal(item, weekend) {
     img: imgUrl(a.imageUrl || a.thumbnailUrl),
     url: a.itemUrl ? BASE + a.itemUrl : `${BASE}/de/aktionen/aktuelle-aktionen`,
     cat,
-    group: classify(cat, name, a.nameSubline),
+    group: a.type_beverages
+      ? "getraenke"
+      : a.type_food && /^sonstiges$/i.test(a._tracking_item_category2 || "")
+        ? "lebensmittel"
+        : classify(cat, name, a.nameSubline),
     from: isoFromUnix(a.promotionFrom),
     to: isoFromUnix(a.promotionTo),
     multi: !price || undefined,

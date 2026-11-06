@@ -214,14 +214,17 @@ const RULES = [
 const GENERIC = /^(aktionen?|angebote?|sonstiges|weitere|alle|neuheiten|highlights?|weihnachten)$/i;
 
 const NAME_RULES = [
-  ["tier", /(hunde|katzen|tierfutter|katzenstreu|vogelfutter|nager)/],
+  [
+    "tier",
+    /(purina|felix|whiskas|pedigree|meisenknödel|hunde|katzen|tierfutter|katzenstreu|vogelfutter|nager)/,
+  ],
   [
     "getraenke",
-    /(wein\b|weisswein|rotwein|rosé|prosecco|champagner|bier\b|lager\b|saft\b|sirup|mineralwasser|cola\b|eistee|kaffee|espresso|kapseln|tee\b|whisky|vodka|gin\b|rum\b|likör|energy drink)/,
+    /(rosso|rosato|merlot|chenin|syrah|pinot|chardonnay|sauvignon|negroamaro|primitivo|rioja|igt\b|igp\b|doc\b|docg\b|aoc\b|vino\b|feldschlösschen|red bull|redbull|rivella|ice tea|wein\b|weisswein|rotwein|rosé|prosecco|champagner|bier\b|lager\b|saft\b|sirup|mineralwasser|cola\b|eistee|kaffee|espresso|kapseln|tee\b|whisky|vodka|gin\b|rum\b|likör|energy drink)/,
   ],
   [
     "lebensmittel",
-    /(schinken|schinkli|poulet|huhn|truten|rind|schwein|kalb|lamm|lachs|thon|crevetten|fisch|salami|wurst|würstli|wienerli|cervelat|speck|fleisch|plätzli|geschnetzelt|pizza|pasta|nudel|spaghetti|penne|ravioli|lasagne|reis\b|kartoffel|rösti|spätzli|gemüse|salat|tomate|zwiebel|karotte|apfel|äpfel|birne|banane|trauben|beeren|mandarin|clementine|orange|zitrone|kaki|granatapfel|avocado|pilz|champignon|milch|joghurt|jogurt|quark|rahm|butter|käse|mozzarella|gruyère|emmentaler|raclette|fondue|eier\b|brot\b|zopf|gipfeli|croissant|toast|kuchen|torte|guetzli|biscuits|praline|schokolade|lebkuchen|biber|chips|nüss|mandeln|honig|konfitüre|müesli|flakes|suppe|bouillon|sauce|ketchup|mayonnaise|senf|öl\b|olivenöl|essig|mehl|zucker|glace|dessert|snack|cracker|tortilla|wraps|bohnen|linsen|mais\b|antipasti|oliven|kapern|tomatenmark|passierte)/,
+    /(pesto|spaghettoni|tortiglioni|corned beef|paprika|ajvar|bulgur|kichererbsen|cashew|nussmischung|baked bean|beanz|dunst|platte\b|mars\b|storck|adventskalender|haribo|nutella|ovomaltine|bueno|überraschung|maxi ei|waffel|blätterteig|teig\b|kokos|bonbon|gummi|lindt|toblerone|ragusa|twix|snickers|karamell|caramel|riegel|schinken|schinkli|poulet|huhn|truten|rind|schwein|kalb|lamm|lachs|thon|crevetten|fisch|salami|wurst|würstli|wienerli|cervelat|speck|fleisch|plätzli|geschnetzelt|pizza|pasta|nudel|spaghetti|penne|ravioli|lasagne|reis\b|kartoffel|rösti|spätzli|gemüse|salat|tomate|zwiebel|karotte|apfel|äpfel|birne|banane|trauben|beeren|mandarin|clementine|orange|zitrone|kaki|granatapfel|avocado|pilz|champignon|milch|joghurt|jogurt|quark|rahm|butter|käse|mozzarella|gruyère|emmentaler|raclette|fondue|eier\b|brot\b|zopf|gipfeli|croissant|toast|kuchen|torte|guetzli|biscuits|praline|schokolade|lebkuchen|biber|chips|nüss|mandeln|honig|konfitüre|müesli|flakes|suppe|bouillon|sauce|ketchup|mayonnaise|senf|öl\b|olivenöl|essig|mehl|zucker|glace|dessert|snack|cracker|tortilla|wraps|bohnen|linsen|mais\b|antipasti|oliven|kapern|tomatenmark|passierte)/,
   ],
   ["baby", /(windel|baby|schnuller|babybrei)/],
   [
@@ -230,7 +233,7 @@ const NAME_RULES = [
   ],
   [
     "haushalt",
-    /(waschmittel|wasch|weichspüler|spülmittel|geschirrtabs|tabs\b|reiniger|putz|wc-|toilettenpapier|haushaltpapier|küchenpapier|kehricht|abfallsäcke|schwamm|lappen|alufolie|frischhaltefolie|backpapier|batterien|insekten)/,
+    /(wäscheparfüm|swiffer|servietten|waschmittel|wasch|weichspüler|spülmittel|geschirrtabs|tabs\b|reiniger|putz|wc-|toilettenpapier|haushaltpapier|küchenpapier|kehricht|abfallsäcke|schwamm|lappen|alufolie|frischhaltefolie|backpapier|batterien|insekten)/,
   ],
   [
     "kleidung",
@@ -238,11 +241,11 @@ const NAME_RULES = [
   ],
   [
     "wohnen",
-    /(kissen|decke|bettwäsche|frottier|handtuch|vorhang|teppich|kerze|vase|deko|lichterkette|lampe|leuchte|topf|pfanne|messer|schüssel|teller|tasse|gläser|aufbewahrung|regal|pflanze|blumen|orchidee|amaryllis|helleborus|weihnachtsstern|garten|werkzeug|bohrmaschine|akkuschrauber|kochtopf)/,
+    /(weihnachtsfigur|weihnachtsmann|led-|figur\b|luftbett|kissen|decke|bettwäsche|frottier|handtuch|vorhang|teppich|kerze|vase|deko|lichterkette|lampe|leuchte|topf|pfanne|messer|schüssel|teller|tasse|gläser|aufbewahrung|regal|pflanze|blumen|orchidee|amaryllis|helleborus|weihnachtsstern|garten|werkzeug|bohrmaschine|akkuschrauber|kochtopf)/,
   ],
   [
     "freizeit",
-    /(lego|puzzle|spiel|plüsch|puppe|ball\b|velo|fahrrad|ski|fitness|yoga|kopfhörer|lautsprecher|ladegerät|powerbank|usb|kabel|tablet|smartwatch|kamera|buch\b|stifte|schreib|ordner|koffer|rucksack|camping|auto)/,
+    /(zuru|electronic|lesehilfe|haartrockner|föhn|heissluftbürste|lego|puzzle|spiel|plüsch|puppe|ball\b|velo|fahrrad|ski|fitness|yoga|kopfhörer|lautsprecher|ladegerät|powerbank|usb|kabel|tablet|smartwatch|kamera|buch\b|stifte|schreib|ordner|koffer|rucksack|camping|auto)/,
   ],
 ];
 
