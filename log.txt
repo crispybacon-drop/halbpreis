@@ -1,0 +1,16 @@
+✘ migros: Error: Migros guest login failed (HTTP 403)
+    at guestToken (file:///home/runner/work/halbpreis/halbpreis/scraper/stores/migros.mjs:20:32)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Module.scrape (file:///home/runner/work/halbpreis/halbpreis/scraper/stores/migros.mjs:42:17)
+    at async file:///home/runner/work/halbpreis/halbpreis/scraper/run.mjs:42:19
+  kept 0 offers from the previous run
+✘ coop: Error: Coop HTTP 403 (page 1)
+    at page (file:///home/runner/work/halbpreis/halbpreis/scraper/stores/coop.mjs:45:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:103:5)
+    at async Module.scrape (file:///home/runner/work/halbpreis/halbpreis/scraper/stores/coop.mjs:57:15)
+    at async file:///home/runner/work/halbpreis/halbpreis/scraper/run.mjs:42:19
+  kept 0 offers from the previous run
+✔ denner: 291 offers in 2994 ms
+✔ lidl: 224 offers in 1492 ms
+✔ aldi: 632 offers in 14422 ms
+total: 1147 offers
